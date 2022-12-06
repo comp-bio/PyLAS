@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys, itertools
+import sys, os, itertools
 import numpy as np
 import pywt
 
@@ -12,7 +12,7 @@ dtt_grid = [8.1858,8.8536,8.8958,8.9203,8.938,8.9518,8.9629,8.972,8.98,8.9872,8.
 def normal(v):
     if v < dtt_grid[0]: return 1
     if v > dtt_grid[-1]: return 0
-    for i in range(len(grid) - 1):
+    for i in range(len(dtt_grid) - 1):
         if dtt_grid[i] > v or v > dtt_grid[i+1]: continue
         return (1 - (i + (v - dtt_grid[i])/(dtt_grid[i+1] - dtt_grid[i]))/(len(dtt_grid) - 1)) * fft_trd
 
@@ -121,29 +121,30 @@ def FFT_dF(x):
 
 # --------------------------------------------------------------------------- #
 if __name__ == "__main__":
-    if len(sys.argv) < 5:
+    if len(sys.argv) < 3:
         err('Usage:\n')
-        err('  python3 %s [chromosome.bcov] [region size N for 2^N] [mean genome coverage] [chromosome name]\n' % sys.argv[0])
+        err('  python3 %s [chromosome.bcov] [region size N for 2^N]\n' % sys.argv[0])
         err('Example:\n')
-        err('  python3 %s chr11.bcov 14 30\n' % sys.argv[0])
-        err('Output:\n')
-        err('  Сhromosome_name Start End FFT_dF DTCWT_Entropy LAS\n\n')
+        err('  python3 %s chr11.bcov 14\n' % sys.argv[0])
+        err('Output columns:\n')
+        err('  Сhromosome_name Start End FFT_dF DTCWT_Entropy LAS Description\n\n')
         sys.exit(1)
 
     line = 1
-    src = bcov(sys.argv[1])
-    cnt, norm = (2**int(sys.argv[2]), float(sys.argv[3]))
-    chr_name = sys.argv[4]
+    src, cnt = (bcov(sys.argv[1]), 2**int(sys.argv[2]))
+    chr_name = os.path.basename(sys.argv[1]).replace('.bcov', '')
 
     while True:
         block = list(itertools.islice(src, cnt))
         if not block: break
-        x = np.array(block)/norm
+        x = np.array(block)
         sys.stdout.write("%s %d %d " % (chr_name, line, line + cnt - 1))
         line += cnt
         if x.sum() == 0:
-            sys.stdout.write("-1 -1 -1\n")
+            sys.stdout.write("-1 -1 -1 no_coverage\n")
         else:
             fft_in, fft_in_n = FFT_dF(x)
             dt_in = DTCWT_Entropy(x)
-            sys.stdout.write("%.4f %.4f %.4f\n" % (fft_in, dt_in, join(fft_in, dt_in)))
+            j = join(fft_in, dt_in)
+            txt = 'aberrant' if j > fft_trd else 'good'
+            sys.stdout.write("%.4f %.4f %.4f %s\n" % (fft_in, dt_in, j, txt))
