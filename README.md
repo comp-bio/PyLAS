@@ -13,13 +13,13 @@ wget "https://raw.githubusercontent.com/comp-bio/PyLAS/main/pylas.sh" && chmod +
 ### Использование:
 
 ```bash
-python3 pylas.sh [cram или bam файл] [размер региона (указать степень двойки)]
+./pylas.sh [cram или bam файл] [размер региона (указать степень двойки)]
 ```
 
 ### Пример:
 
 ```bash
-python3 pylas.sh ../CHM/NA19240.alt_bwamem_GRCh38DH.20150718.YRI.low_coverage.cram 14
+./pylas.sh ../CHM/NA19240.alt_bwamem_GRCh38DH.20150718.YRI.low_coverage.cram 14
 ```
 
 ### Что происходит "под капотом"
