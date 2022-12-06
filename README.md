@@ -13,22 +13,24 @@ wget "https://raw.githubusercontent.com/comp-bio/PyLAS/main/pylas.sh" && chmod +
 ### Использование:
 
 ```bash
-./pylas.sh [cram или bam файл] [размер региона (указать степень двойки)]
+./pylas.sh [cram или bam файл] [размер региона (указать степень двойки)] [референсный геном для cram файла]
 ```
+
+Референсный геном [GRCh38](http://ftp.ensembl.org/pub/current_fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz).
+
 
 ### Пример:
 
 ```bash
-./pylas.sh ../CHM/NA19240.alt_bwamem_GRCh38DH.20150718.YRI.low_coverage.cram 14
+./pylas.sh ../CHM/NA19240.alt_bwamem_GRCh38DH.20150718.YRI.low_coverage.cram 14 Homo_sapiens.GRCh38.dna.toplevel.fa
 ```
 
 ### Что происходит "под капотом"
 
 1. Устанавливаются зависимости [mosdepth](https://github.com/brentp/mosdepth) и [bed2cov](https://github.com/comp-bio/Bed2Cov) для получения сигнала глубины покрытия генома в формате bcov.
-2. Скачивается референсный геном для файлов в формате cram
-3. Устанавливаются зависимости python3: PyWavelets, numpy
-4. Скачивается скрипт pylas.py (.bcov -> .las)
-5. Запускается извлечение значений покрытия (.bam -> .bed.gz -> .bcov) и осуществляется подсчёт метрики (.bcov -> .las)
+2. Устанавливаются зависимости python3: PyWavelets, numpy
+3. Скачивается скрипт pylas.py (.bcov -> .las)
+4. Запускается извлечение значений покрытия (.bam -> .bed.gz -> .bcov) и осуществляется подсчёт метрики (.bcov -> .las)
 
 ## pylas.py
 
