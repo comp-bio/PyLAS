@@ -127,7 +127,7 @@ if __name__ == "__main__":
         err('Example:\n')
         err('  python3 %s chr11.bcov 14\n' % sys.argv[0])
         err('Output columns:\n')
-        err('  Сhromosome_name Start End FFT_dF DTCWT_Entropy LAS Description\n\n')
+        err('  Chromosome_name Start End FFT_dF DTCWT_Entropy LAS Description\n\n')
         sys.exit(1)
 
     line = 1

@@ -53,7 +53,7 @@ mkdir -p "${file_raw}"
 # shellcheck disable=SC2164
 cd "${file_raw}"
 gzip -cd ../"${file_raw}".per-base.bed.gz | ../bed2cov
-rm -f ./*_*.bcov ./*HLA*.bcov ./*EBV.bcov
+rm -f ./*_*.bcov ./*HLA*.bcov ./*EBV.bcov GL00*.bcov hs37d5.bcov
 cd ../
 
 # --------------------------------------------------------------------------- #
@@ -64,8 +64,8 @@ for bc in $(ls ${file_raw}/*.bcov); do
   python3 pylas.py "${bc}" "${pow}" > "${bc}.las";
 done
 
-echo "Сhromosome_name Start End FFT_dF DTCWT_Entropy LAS Description" > ${file_raw}.las
-for las in $(ls ${file_raw}/*.las); do
+echo "Chromosome_name Start End FFT_dF DTCWT_Entropy LAS Description" > ${file_raw}.las
+for las in $(ls -1v ${file_raw}/*.las); do
   cat $las >> ${file_raw}.las
 done
 
