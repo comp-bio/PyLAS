@@ -1,13 +1,12 @@
 #!/bin/bash
-# Usage: ./pylas.sh [cram-or-bam-file] [N-pow] [ref-genome-for-cram-file]
+# Usage: ./pylas.sh [cram-or-bam-file] [ref-genome-for-cram-file]
 
 file=$1
 file_ext=$(basename "${file}")
 file_ext=${file_ext##*.}
 file_raw=$(basename "${file}")
 file_raw=${file_raw%.$file_ext}
-pow=$2
-reference=$3
+reference=$2
 
 function log {
   echo -e "\033[0;33m$1\033[0m"
@@ -61,7 +60,7 @@ cd ../
 
 rm -f ${file_raw}/*.las
 for bc in $(ls ${file_raw}/*.bcov); do
-  python3 pylas.py "${bc}" "${pow}" > "${bc}.las";
+  python3 pylas.py "${bc}" > "${bc}.las";
 done
 
 echo "Chromosome_name Start End FFT_dF DTCWT_Entropy LAS Description" > ${file_raw}.las
