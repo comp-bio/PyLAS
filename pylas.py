@@ -147,4 +147,4 @@ if __name__ == "__main__":
             dt_in = DTCWT_Entropy(x)
             j = join(fft_in, dt_in)
             txt = 'aberrant' if j > fft_trd else 'good'
-            sys.stdout.write("%.4f %.4f %.4f %s\n" % (fft_in, dt_in, j, txt))
+            sys.stdout.write("%.6f %.6f %.6f %s\n" % (fft_in, dt_in, j, txt))
