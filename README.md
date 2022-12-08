@@ -13,7 +13,7 @@ wget "https://raw.githubusercontent.com/comp-bio/PyLAS/main/pylas.sh" && chmod +
 ### Использование:
 
 ```bash
-./pylas.sh [cram или bam файл] [размер региона (указать степень двойки)] [референсный геном для cram файла]
+./pylas.sh [cram или bam файл] [референсный геном для cram файла]
 ```
 
 Референсный геном [GRCh38](http://ftp.ensembl.org/pub/current_fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz).
@@ -22,7 +22,7 @@ wget "https://raw.githubusercontent.com/comp-bio/PyLAS/main/pylas.sh" && chmod +
 ### Пример:
 
 ```bash
-./pylas.sh ../CHM/NA19240.alt_bwamem_GRCh38DH.20150718.YRI.low_coverage.cram 14 Homo_sapiens.GRCh38.dna.toplevel.fa
+./pylas.sh ../CHM/NA19240.alt_bwamem_GRCh38DH.20150718.YRI.low_coverage.cram Homo_sapiens.GRCh38.dna.toplevel.fa
 ```
 
 ### Что происходит "под капотом"
@@ -44,15 +44,7 @@ wget https://raw.githubusercontent.com/comp-bio/PyLAS/main/pylas.py
 Если у Вас уже есть извлечённый сигнал покрытия в формате .bcov, Вы можете запустить на нём подсчёт метрики так:
 
 ```bash
-python3 pylas.py \
-  [файл в формате .bcov] \
-  [степень 2, которая будет использована как размер региона (N для 2^N)] > [результат]
-```
-
-Пример для тестовых данных из репозитория:
-
-```bash
-python3 pylas.py data/mini.bcov 8
+python3 pylas.py [файл в формате .bcov]
 ```
 
 На выходе будет получен файл из 6 колонок:  
