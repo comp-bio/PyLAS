@@ -13,11 +13,18 @@ def get_lines(path):
 
 
 range  = (500, 9000)
+limits = (500, 4000)
 sample = get_lines(sys.argv[1])
 header = next(sample)
 
-values = [float(dict(zip(header, line))['fft']) for line in sample]
-values = [max(min(v, range[1]), range[0]) for v in values if v > 0]
+values = []
+for line in sample:
+    obj, val = dict(zip(header, line)), float(line[3])
+    if 'fft' in obj: val = float(obj['fft'])
+    if 'FFT_dF' in obj: val = float(obj['FFT_dF'])
+    if val < limits[0] or val > limits[1]: continue
+    values.append(val)
+
 hist = np.histogram(values, bins=400, range=range, density=True)[0]
 
 with open('gim.py') as f:
